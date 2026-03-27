@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="rounded-lg bg-white p-6 shadow-sm">
+  <h2 class="text-2xl font-semibold text-slate-800 mb-4">Novo dono</h2>
+  <form method="post" class="space-y-4">
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-600">Nome</label>
+      <input class="w-full rounded border border-slate-300 px-3 py-2" type="text" name="nome" required>
+    </div>
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-600">NIF</label>
+      <input class="w-full rounded border border-slate-300 px-3 py-2" type="text" name="nif">
+    </div>
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-600">Telefone</label>
+      <input class="w-full rounded border border-slate-300 px-3 py-2" type="text" name="telefone">
+    </div>
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-600">Email</label>
+      <input class="w-full rounded border border-slate-300 px-3 py-2" type="email" name="email">
+    </div>
+    <button class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition" type="submit">Guardar</button>
+  </form>
+</div>
+{% endblock %}

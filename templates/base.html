@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clínica Veterinária</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .container { max-width: 96rem; }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-100 text-slate-900">
+  <header class="bg-white border-b shadow-sm">
+    <div class="container mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="inline-block h-8 w-8 rounded-full bg-blue-600"></span>
+        <h1 class="text-xl font-bold text-slate-800">Clínica Veterinária</h1>
+      </div>
+      {% if session.username %}
+      <div class="text-sm text-slate-700 flex flex-wrap items-center gap-4">
+        <span>Olá, <strong>{{ session.username }}</strong></span>
+        <a class="px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700 transition" href="{{ url_for('logout') }}">Logout</a>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+
+  {% if session.username %}
+  <nav class="bg-blue-50 border-b">
+    <div class="container mx-auto px-4 py-2 flex flex-wrap gap-2">
+      <a class="rounded px-3 py-1 text-sm font-medium text-blue-700 hover:bg-blue-100" href="{{ url_for('index') }}">Início</a>
+      <a class="rounded px-3 py-1 text-sm font-medium text-blue-700 hover:bg-blue-100" href="{{ url_for('donos') }}">Donos</a>
+      <a class="rounded px-3 py-1 text-sm font-medium text-blue-700 hover:bg-blue-100" href="{{ url_for('animais') }}">Animais</a>
+      <a class="rounded px-3 py-1 text-sm font-medium text-blue-700 hover:bg-blue-100" href="{{ url_for('consultas') }}">Consultas</a>
+      <a class="rounded px-3 py-1 text-sm font-medium text-blue-700 hover:bg-blue-100" href="{{ url_for('relatorio_gastos') }}">Relatório de gastos</a>
+    </div>
+  </nav>
+  {% endif %}
+
+  <main class="container mx-auto px-4 py-6">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="space-y-2 mb-4">
+          {% for m in messages %}
+            <div class="rounded border border-blue-200 bg-blue-50 px-4 py-2 text-sm text-blue-800">{{ m }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

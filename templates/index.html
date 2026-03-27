@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="rounded-lg border bg-white p-6 shadow-sm">
+  <p class="mb-4 text-slate-700">Bem-vindo ao sistema da clínica veterinária.</p>
+  <ul class="list-disc pl-5 space-y-2 text-slate-700">
+    <li><a class="text-blue-600 hover:text-blue-800" href="{{ url_for('donos') }}">Gestão de donos</a></li>
+    <li><a class="text-blue-600 hover:text-blue-800" href="{{ url_for('animais') }}">Gestão de animais</a></li>
+    <li><a class="text-blue-600 hover:text-blue-800" href="{{ url_for('consultas') }}">Gestão de consultas</a></li>
+    <li><a class="text-blue-600 hover:text-blue-800" href="{{ url_for('relatorio_gastos') }}">Relatório de gastos por dono</a></li>
+  </ul>
+</div>
+{% endblock %}

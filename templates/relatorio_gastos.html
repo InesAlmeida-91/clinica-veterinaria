@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-2xl font-semibold text-slate-800 mb-4">Relatório de gastos por dono</h2>
+<div class="overflow-x-auto rounded-lg border bg-white shadow-sm">
+  <table class="min-w-full divide-y divide-slate-200">
+    <thead class="bg-slate-50">
+      <tr>
+        <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Dono</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Total gasto (€)</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-100">
+      {% for r in relatorio %}
+      <tr class="hover:bg-slate-50">
+        <td class="px-4 py-2 text-sm text-slate-700">{{ r[0] }}</td>
+        <td class="px-4 py-2 text-sm text-slate-700">{{ r[1] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-2xl font-semibold text-slate-800 mb-4">Histórico clínico – Animal {{ id_animal }}</h2>
+
+{% if historico %}
+  <div class="space-y-6">
+  {% for c in historico %}
+    <div class="rounded-lg border bg-white p-4 shadow-sm">
+      <h3 class="text-lg font-medium text-slate-700">Consulta {{ c.id_consulta if c.id_consulta is defined else c["id_consulta"] }}</h3>
+      <p class="text-sm text-slate-600 mb-2">Data: {{ c.data_consulta if c.data_consulta is defined else c["data_consulta"] }}, Motivo: {{ c.motivo if c.motivo is defined else c["motivo"] }}</p>
+      {% set tratamentos = c.tratamentos if c.tratamentos is defined else c["tratamentos"] %}
+      {% if tratamentos %}
+      <div class="overflow-x-auto rounded border bg-slate-50 p-2">
+        <table class="min-w-full divide-y divide-slate-200 text-sm">
+          <thead>
+            <tr>
+              <th class="px-3 py-2 text-left font-semibold text-slate-600">Tratamento</th>
+              <th class="px-3 py-2 text-left font-semibold text-slate-600">Quantidade</th>
+              <th class="px-3 py-2 text-left font-semibold text-slate-600">Total (€)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200">
+            {% for t in tratamentos %}
+            <tr class="bg-white hover:bg-slate-50">
+              <td class="px-3 py-2 text-slate-700">{{ t[0] }}</td>
+              <td class="px-3 py-2 text-slate-700">{{ t[1] }}</td>
+              <td class="px-3 py-2 text-slate-700">{{ t[2] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="text-sm text-slate-500">Sem tratamentos registados.</p>
+      {% endif %}
+    </div>
+  {% endfor %}
+  </div>
+{% else %}
+  <p class="text-slate-600">Sem consultas para este animal.</p>
+{% endif %}
+
+{% endblock %}
