@@ -1,22 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="mx-auto w-full max-w-md rounded-lg bg-white p-6 shadow-md">
-  <h2 class="text-2xl font-semibold text-slate-800 mb-4">Login</h2>
+<div class="mx-auto w-full max-w-md rounded-2xl border border-amber-300/80 bg-white/90 p-6 shadow-xl backdrop-blur-sm">
+  <h2 class="mb-1 text-2xl font-semibold tracking-tight text-orange-950">Login</h2>
+  <p class="mb-4 text-sm text-orange-800">Acede ao sistema da clínica</p>
   <form method="post" class="space-y-4">
     <div>
-      <label class="mb-1 block text-sm font-medium text-slate-600">Username</label>
-      <input class="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" type="text" name="username" required>
+      <label class="mb-1 block text-sm font-medium text-orange-800">Username</label>
+      <input class="w-full rounded border border-amber-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200" type="text" name="username" required>
     </div>
     <div>
-      <label class="mb-1 block text-sm font-medium text-slate-600">Password</label>
+      <label class="mb-1 block text-sm font-medium text-orange-800">Password</label>
       <div class="relative">
-        <input id="password" class="w-full rounded border border-slate-300 px-3 py-2 pr-10 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" type="password" name="password" required>
+        <input id="password" class="w-full rounded border border-amber-300 px-3 py-2 pr-10 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200" type="password" name="password" required>
         <button type="button" onclick="doTogglePassword()" class="absolute right-2 top-1/2 -translate-y-1/2 opacity-60 hover:opacity-100 transition">
           <img id="eyeIconImg" src="https://img.icons8.com/?size=24&id=121539&format=png&color=000000" alt="Mostrar password">
         </button>
       </div>
     </div>
-    <button class="w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition" type="submit">Entrar</button>
+    <button class="w-full rounded-md bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-2 font-semibold text-white hover:from-amber-600 hover:to-orange-600 transition" type="submit">Entrar</button>
   </form>
 </div>
 <script>

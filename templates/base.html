@@ -4,45 +4,105 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Clínica Veterinária</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    :root {
+      --bg-start: #fff2cc;
+      --bg-end: #ffe3bf;
+      --accent: #f97316;
+      --accent-strong: #ea580c;
+      --ink: #7c2d12;
+      --card: #fffdf8;
+    }
+
+    body {
+      font-family: "Outfit", sans-serif;
+      background: radial-gradient(circle at 15% 0%, var(--bg-start), transparent 35%),
+        radial-gradient(circle at 85% 20%, #ffd18b, transparent 30%),
+        linear-gradient(165deg, #fff7df 0%, var(--bg-end) 100%);
+    }
+
     .container { max-width: 96rem; }
+
+    .decor-bubble {
+      position: fixed;
+      z-index: -1;
+      border-radius: 9999px;
+      filter: blur(2px);
+      opacity: 0.55;
+      animation: drift 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .decor-bubble.one {
+      width: 220px;
+      height: 220px;
+      right: 3%;
+      top: 95px;
+      background: linear-gradient(140deg, #fb923c, #f59e0b);
+    }
+
+    .decor-bubble.two {
+      width: 180px;
+      height: 180px;
+      left: 4%;
+      bottom: 7%;
+      animation-delay: 1.4s;
+      background: linear-gradient(140deg, #fdba74, #f97316);
+    }
+
+    .frosted {
+      background: color-mix(in srgb, var(--card) 82%, white);
+      border: 1px solid #fed7aa;
+      box-shadow: 0 12px 24px rgba(154, 52, 18, 0.08);
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(12px); }
+    }
   </style>
 </head>
-<body class="min-h-screen bg-slate-100 text-slate-900">
-  <header class="bg-white border-b shadow-sm">
+<body class="min-h-screen bg-amber-50 text-orange-950">
+  <div class="decor-bubble one"></div>
+  <div class="decor-bubble two"></div>
+
+  <header class="bg-white/85 border-b border-orange-200 backdrop-blur-sm shadow-sm">
     <div class="container mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
       <div class="flex items-center gap-2">
-        <span class="inline-block h-8 w-8 rounded-full bg-blue-600"></span>
-        <h1 class="text-xl font-bold text-slate-800">Clínica Veterinária</h1>
+        <span class="inline-block h-8 w-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 shadow"></span>
+        <h1 class="text-xl font-bold tracking-tight text-orange-950">Clínica Veterinária</h1>
       </div>
       {% if session.username %}
-      <div class="text-sm text-slate-700 flex flex-wrap items-center gap-4">
+      <div class="text-sm text-orange-900 flex flex-wrap items-center gap-4">
         <span>Olá, <strong>{{ session.username }}</strong></span>
-        <a class="px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700 transition" href="{{ url_for('logout') }}">Logout</a>
+        <a class="px-3 py-1 rounded-md bg-orange-500 text-white hover:bg-orange-600 transition" href="{{ url_for('logout') }}">Logout</a>
       </div>
       {% endif %}
     </div>
   </header>
 
   {% if session.username %}
-  <nav class="bg-blue-50 border-b">
+  <nav class="bg-amber-100/90 border-b border-orange-200 backdrop-blur-sm">
     <div class="container mx-auto px-4 py-2 flex flex-wrap gap-2">
-      <a class="rounded px-3 py-1 text-sm font-medium text-blue-700 hover:bg-blue-100" href="{{ url_for('index') }}">Início</a>
-      <a class="rounded px-3 py-1 text-sm font-medium text-blue-700 hover:bg-blue-100" href="{{ url_for('donos') }}">Donos</a>
-      <a class="rounded px-3 py-1 text-sm font-medium text-blue-700 hover:bg-blue-100" href="{{ url_for('animais') }}">Animais</a>
-      <a class="rounded px-3 py-1 text-sm font-medium text-blue-700 hover:bg-blue-100" href="{{ url_for('consultas') }}">Consultas</a>
-      <a class="rounded px-3 py-1 text-sm font-medium text-blue-700 hover:bg-blue-100" href="{{ url_for('relatorio_gastos') }}">Relatório de gastos</a>
+      <a class="rounded-full px-3 py-1 text-sm font-semibold text-orange-900 hover:bg-amber-200" href="{{ url_for('index') }}">Início</a>
+      <a class="rounded-full px-3 py-1 text-sm font-semibold text-orange-900 hover:bg-amber-200" href="{{ url_for('donos') }}">Donos</a>
+      <a class="rounded-full px-3 py-1 text-sm font-semibold text-orange-900 hover:bg-amber-200" href="{{ url_for('animais') }}">Animais</a>
+      <a class="rounded-full px-3 py-1 text-sm font-semibold text-orange-900 hover:bg-amber-200" href="{{ url_for('consultas') }}">Consultas</a>
+      <a class="rounded-full px-3 py-1 text-sm font-semibold text-orange-900 hover:bg-amber-200" href="{{ url_for('relatorio_gastos') }}">Relatório de gastos</a>
     </div>
   </nav>
   {% endif %}
 
-  <main class="container mx-auto px-4 py-6">
+  <main class="container mx-auto px-4 py-6 relative">
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <div class="space-y-2 mb-4">
           {% for m in messages %}
-            <div class="rounded border border-blue-200 bg-blue-50 px-4 py-2 text-sm text-blue-800">{{ m }}</div>
+            <div class="rounded-lg border border-amber-300 bg-amber-100/85 px-4 py-2 text-sm text-orange-900 frosted">{{ m }}</div>
           {% endfor %}
         </div>
       {% endif %}

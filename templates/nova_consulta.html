@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="rounded-lg bg-white p-6 shadow-sm">
-  <h2 class="text-2xl font-semibold text-slate-800 mb-4">Marcar nova consulta</h2>
+  <h2 class="text-2xl font-semibold text-orange-950 mb-4">Marcar nova consulta</h2>
   <form method="post" class="space-y-4">
     <div>
-      <label class="mb-1 block text-sm font-medium text-slate-600">Data (DD-MM-AAAA HH:MM)</label>
-      <input class="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" type="text" name="data_consulta" required placeholder="dd-mm-aaaa hh:mm">
+      <label class="mb-1 block text-sm font-medium text-orange-800">Data (DD-MM-AAAA HH:MM)</label>
+      <input class="w-full rounded border border-amber-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200" type="text" name="data_consulta" required placeholder="dd-mm-aaaa hh:mm">
     </div>
     <div>
-      <label class="mb-1 block text-sm font-medium text-slate-600">Motivo</label>
-      <input class="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" type="text" name="motivo" required>
+      <label class="mb-1 block text-sm font-medium text-orange-800">Motivo</label>
+      <input class="w-full rounded border border-amber-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200" type="text" name="motivo" required>
     </div>
     <div class="grid grid-cols-2 gap-4">
       <div>
-        <label class="mb-1 block text-sm font-medium text-slate-600">Animal</label>
-        <select class="w-full rounded border border-slate-300 px-3 py-2" name="id_animal" required>
+        <label class="mb-1 block text-sm font-medium text-orange-800">Animal</label>
+        <select class="w-full rounded border border-amber-300 px-3 py-2" name="id_animal" required>
           <option value="">Selecione o animal</option>
           {% for a in animais %}
           <option value="{{ a[0] }}">{{ a[1] }} ({{ a[2] }})</option>
@@ -22,8 +22,8 @@
         </select>
       </div>
       <div>
-        <label class="mb-1 block text-sm font-medium text-slate-600">Veterinário</label>
-        <select class="w-full rounded border border-slate-300 px-3 py-2" name="id_vet" required>
+        <label class="mb-1 block text-sm font-medium text-orange-800">Veterinário</label>
+        <select class="w-full rounded border border-amber-300 px-3 py-2" name="id_vet" required>
           <option value="">Selecione o veterinário</option>
           {% for v in veterinarios %}
           <option value="{{ v[0] }}">{{ v[1] }}</option>
@@ -31,7 +31,7 @@
         </select>
       </div>
     </div>
-    <button class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition" type="submit">Marcar nova consulta</button>
+    <button class="rounded bg-orange-500 px-4 py-2 text-white hover:bg-orange-600 transition" type="submit">Marcar nova consulta</button>
   </form>
 </div>
 {% endblock %}

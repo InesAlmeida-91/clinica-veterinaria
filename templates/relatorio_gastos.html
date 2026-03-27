@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-<h2 class="text-2xl font-semibold text-slate-800 mb-4">Relatório de gastos</h2>
+<h2 class="text-2xl font-semibold text-orange-950 mb-4">Relatório de gastos</h2>
 <div class="rounded-lg bg-white p-6 shadow-sm mb-6">
   <form method="post" class="grid grid-cols-1 md:grid-cols-3 gap-4">
     <div>
-      <label class="block text-sm font-medium text-slate-600">Dono</label>
-      <select id="selectDono" class="w-full rounded border border-slate-300 px-3 py-2" name="id_dono">
+      <label class="block text-sm font-medium text-orange-800">Dono</label>
+      <select id="selectDono" class="w-full rounded border border-amber-300 px-3 py-2" name="id_dono">
         <option value="">Todos</option>
         {% for d in donos %}
         <option value="{{ d[0] }}">{{ d[1] }}</option>
@@ -13,8 +13,8 @@
       </select>
     </div>
     <div>
-      <label class="block text-sm font-medium text-slate-600">Animal</label>
-      <select id="selectAnimal" class="w-full rounded border border-slate-300 px-3 py-2" name="id_animal">
+      <label class="block text-sm font-medium text-orange-800">Animal</label>
+      <select id="selectAnimal" class="w-full rounded border border-amber-300 px-3 py-2" name="id_animal">
         <option value="">Todos</option>
         {% for a in animais %}
         <option value="{{ a[0] }}" data-dono="{{ a[4] }}">{{ a[1] }} ({{ a[2] }})</option>
@@ -22,7 +22,7 @@
       </select>
     </div>
     <div class="flex items-end">
-      <button class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition" type="submit">Ver gastos</button>
+      <button class="rounded bg-orange-500 px-4 py-2 text-white hover:bg-orange-600 transition" type="submit">Ver gastos</button>
     </div>
   </form>
 </div>
@@ -30,26 +30,26 @@
 {% if selecionado %}
   <div class="overflow-x-auto rounded-lg border bg-white shadow-sm">
     {% if relatorio %}
-    <table class="min-w-full divide-y divide-slate-200">
-      <thead class="bg-slate-50">
+    <table class="min-w-full divide-y divide-amber-200">
+      <thead class="bg-amber-50">
         <tr>
-          <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Dono</th>
-          <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Animal</th>
-          <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Total gasto (€)</th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-orange-800">Dono</th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-orange-800">Animal</th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-orange-800">Total gasto (€)</th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-slate-100">
+      <tbody class="divide-y divide-amber-100">
         {% for r in relatorio %}
-        <tr class="hover:bg-slate-50">
-          <td class="px-4 py-2 text-sm text-slate-700">{{ r[0] }}</td>
-          <td class="px-4 py-2 text-sm text-slate-700">{{ r[1] }}</td>
-          <td class="px-4 py-2 text-sm text-slate-700">{{ r[2] }}</td>
+        <tr class="hover:bg-amber-50">
+          <td class="px-4 py-2 text-sm text-orange-900">{{ r[0] }}</td>
+          <td class="px-4 py-2 text-sm text-orange-900">{{ r[1] }}</td>
+          <td class="px-4 py-2 text-sm text-orange-900">{{ r[2] }}</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
     {% else %}
-    <p class="p-4 text-slate-600">Sem gastos para os filtros selecionados.</p>
+    <p class="p-4 text-orange-800">Sem gastos para os filtros selecionados.</p>
     {% endif %}
   </div>
 {% endif %}

@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="rounded-lg border bg-white p-6 shadow-sm">
-  <p class="mb-4 text-slate-700">Bem-vindo ao sistema da clínica veterinária.</p>
-  <ul class="list-disc pl-5 space-y-2 text-slate-700">
-    <li><a class="text-blue-600 hover:text-blue-800" href="{{ url_for('donos') }}">Gestão de donos</a></li>
-    <li><a class="text-blue-600 hover:text-blue-800" href="{{ url_for('animais') }}">Gestão de animais</a></li>
-    <li><a class="text-blue-600 hover:text-blue-800" href="{{ url_for('consultas') }}">Gestão de consultas</a></li>
-    <li><a class="text-blue-600 hover:text-blue-800" href="{{ url_for('relatorio_gastos') }}">Relatório de gastos por dono</a></li>
+<div class="rounded-2xl border border-amber-300 bg-white/90 p-6 shadow-xl backdrop-blur-sm">
+  <div class="mb-6 rounded-xl bg-gradient-to-r from-amber-200 via-orange-200 to-amber-100 p-4">
+    <p class="text-lg font-semibold text-orange-950">Bem-vindo ao sistema da clínica veterinária</p>
+    <p class="mt-1 text-sm text-orange-900">Gestão rápida de donos, animais, consultas e tratamentos.</p>
+  </div>
+  <ul class="space-y-2 text-orange-900">
+    <li><a class="inline-flex items-center gap-2 rounded-md bg-amber-50 px-3 py-2 font-medium text-orange-700 hover:bg-amber-100 hover:text-orange-900" href="{{ url_for('donos') }}">→ Gestão de donos</a></li>
+    <li><a class="inline-flex items-center gap-2 rounded-md bg-amber-50 px-3 py-2 font-medium text-orange-700 hover:bg-amber-100 hover:text-orange-900" href="{{ url_for('animais') }}">→ Gestão de animais</a></li>
+    <li><a class="inline-flex items-center gap-2 rounded-md bg-amber-50 px-3 py-2 font-medium text-orange-700 hover:bg-amber-100 hover:text-orange-900" href="{{ url_for('consultas') }}">→ Gestão de consultas</a></li>
+    <li><a class="inline-flex items-center gap-2 rounded-md bg-amber-50 px-3 py-2 font-medium text-orange-700 hover:bg-amber-100 hover:text-orange-900" href="{{ url_for('relatorio_gastos') }}">→ Relatório de gastos por dono</a></li>
   </ul>
 </div>
 {% endblock %}
