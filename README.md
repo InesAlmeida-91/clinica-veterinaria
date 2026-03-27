@@ -1,6 +1,6 @@
 # 🐾 Sistema de Clínica Veterinária
 
-Projeto desenvolvido em Python com ligação a base de dados MariaDB, com o objetivo de gerir a informação de uma clínica veterinária.
+Aplicação web desenvolvida em Python/Flask com ligação a base de dados MariaDB, para gerir uma clínica veterinária com controlo de acessos por perfil de utilizador.
 
 ---
 
@@ -8,37 +8,37 @@ Projeto desenvolvido em Python com ligação a base de dados MariaDB, com o obje
 
 Organizar e gerir:
 
-* donos
-* animais
-* consultas
-* tratamentos
-
-Inclui funcionalidades de histórico clínico e relatórios, simulando um sistema real.
+* Donos de animais
+* Animais (com arquivo)
+* Consultas e descrições clínicas
+* Tratamentos por consulta
+* Relatórios de gastos
 
 ---
 
 ## ⚙️ Tecnologias Utilizadas
 
-* Python
+* Python + Flask
 * MariaDB (XAMPP / phpMyAdmin)
 * mysql-connector-python
+* Tailwind CSS
 
 ---
 
 ## 📦 Instalação
 
-### 1. Instalar dependência
+### 1. Instalar dependências
 
-pip install mysql-connector-python
-
----
+```bash
+pip install flask mysql-connector-python
+```
 
 ### 2. Base de dados
 
-Importar o ficheiro `.sql` no phpMyAdmin:
-
-* Criar base de dados: `clinica_veterinaria`
-* Importar o ficheiro SQL fornecido
+1. Iniciar o MySQL no XAMPP
+2. Abrir o phpMyAdmin
+3. Criar base de dados: `clinica_veterinaria`
+4. Importar o ficheiro `clinica_veterinaria.sql`
 
 ---
 
@@ -47,53 +47,60 @@ Importar o ficheiro `.sql` no phpMyAdmin:
 1. Ligar o MySQL no XAMPP
 2. Executar no terminal:
 
-python main.py
+```bash
+python app.py
+```
+
+3. Abrir o browser em `http://localhost:5000`
 
 ---
 
-## 🧩 Funcionalidades
+## 👥 Utilizadores de teste
 
-### 👤 Receção
-
-* Registar donos
-* Listar donos
-* Registar animais
-* Listar animais
-* Arquivar animais
-
-### 🩺 Consultas
-
-* Marcar consultas
-* Listar consultas
-* Histórico clínico por animal
-* Relatório de gastos por dono
+| Username  | Password     | Perfil  |
+|-----------|--------------|---------|
+| admin     | admin123     | admin   |
+| rececao1  | rececao123   | rececao |
+| vet1      | vet123       | vet     |
 
 ---
 
-## 🧠 Funcionalidades Avançadas
+## 🧩 Funcionalidades por perfil
 
-* Validação de IDs (evita erros do utilizador)
-* Histórico clínico completo
-* Associação de tratamentos a consultas
-* Relatórios com cálculo automático
-* Arquivamento de animais (ex: falecimento)
+### 👤 Receção (`rececao`)
+
+* Registar e listar donos
+* Registar, listar e arquivar animais
+* Marcar e listar consultas
+* Ver histórico clínico por animal
+* Relatório de gastos por dono/animal
+
+### 🩺 Veterinário (`vet`)
+
+* Listar donos e animais
+* Marcar e listar consultas
+* Ver e editar detalhes de consulta (descrição clínica)
+* Gerir tratamentos por consulta
+* Ver histórico clínico por animal
+* Relatório de gastos
+
+### 🔧 Administrador (`admin`)
+
+* Acesso total a todas as funcionalidades
 
 ---
 
 ## 📂 Estrutura do Projeto
 
-* main.py → menu principal
-* gestao_recepcao.py → gestão administrativa
-* gestao_consultas.py → gestão clínica
-
----
-
-## 🚀 Melhorias Futuras
-
-* Interface gráfica
-* Sistema de login
-* Arquivamento de donos
-* Exportação de relatórios
+```
+app.py                    # Aplicação Flask e rotas
+auth.py                   # Autenticação de utilizadores
+db.py                     # Ligação à base de dados
+services_recepcao.py      # Serviços de donos e animais
+services_consultas.py     # Serviços de consultas e tratamentos
+templates/                # Templates HTML (Tailwind CSS)
+clinica_veterinaria.sql   # Script SQL da base de dados
+```
 
 ---
 
@@ -103,6 +110,3 @@ Inês Almeida
 
 ---
 
-## 📌 Nota
-
-O sistema utiliza arquivamento em vez de eliminação de dados, garantindo a preservação do histórico clínico, como acontece em sistemas reais.

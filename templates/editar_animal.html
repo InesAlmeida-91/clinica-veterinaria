@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="rounded-lg bg-white p-6 shadow-sm">
+  <h2 class="text-2xl font-semibold text-slate-800 mb-4">Editar animal</h2>
+  <form method="post" class="space-y-4">
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-600">Nome</label>
+      <input class="w-full rounded border border-slate-300 px-3 py-2" type="text" name="nome" value="{{ animal[1] }}" required>
+    </div>
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-600">Espécie</label>
+      <input class="w-full rounded border border-slate-300 px-3 py-2" type="text" name="especie" value="{{ animal[2] }}" required>
+    </div>
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-600">Raça</label>
+      <input class="w-full rounded border border-slate-300 px-3 py-2" type="text" name="raca" value="{{ animal[3] }}">
+    </div>
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-600">Data de nascimento</label>
+      <input class="w-full rounded border border-slate-300 px-3 py-2" type="date" name="data_nascimento" value="{{ animal[4] }}">
+    </div>
+    <div>
+      <label class="mb-1 block text-sm font-medium text-slate-600">Dono</label>
+      <select class="w-full rounded border border-slate-300 px-3 py-2" name="id_dono" required>
+        <option value="">Selecione um dono</option>
+        {% for d in donos %}
+        <option value="{{ d[0] }}" {% if d[0] == animal[5] %}selected{% endif %}>{{ d[1] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="flex gap-2">
+      <button class="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700 transition" type="submit">Guardar alterações</button>
+      <a class="rounded bg-slate-200 px-4 py-2 text-slate-700 hover:bg-slate-300 transition" href="{{ url_for('animais') }}">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

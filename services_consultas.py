@@ -31,14 +31,15 @@ def listar_consultas():
     conn = ligar()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT c.id_consulta, c.data_consulta, a.nome, v.nome
+        SELECT c.id_consulta, c.data_consulta, a.nome, c.motivo, v.nome
         FROM consultas c
         JOIN animais a ON c.id_animal = a.id_animal
         JOIN veterinarios v ON c.id_vet = v.id_vet
+        ORDER BY c.data_consulta DESC
     """)
     consultas = cursor.fetchall()
     conn.close()
-    return consultas  # (id_consulta, data, nome_animal, nome_vet)
+    return consultas  # (id_consulta, data, nome_animal, motivo, nome_vet)
 
 def historico_por_animal(id_animal):
     conn = ligar()
@@ -88,6 +89,103 @@ def relatorio_gastos_por_dono():
     conn.close()
     return relatorio
 
+def listar_veterinarios():
+    conn = ligar()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id_vet, nome FROM veterinarios")
+    veterinarios = cursor.fetchall()
+    conn.close()
+    return veterinarios  # (id_vet, nome)
+
+
+def consulta_por_id(id_consulta):
+    conn = ligar()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT c.id_consulta, c.data_consulta, c.motivo, c.descricao, c.id_animal, c.id_vet, a.nome, v.nome FROM consultas c JOIN animais a ON c.id_animal = a.id_animal JOIN veterinarios v ON c.id_vet = v.id_vet WHERE c.id_consulta = %s", (id_consulta,))
+        raw = cursor.fetchone()
+        conn.close()
+        if not raw:
+            return None
+        return {
+            'id_consulta': raw[0],
+            'data_consulta': raw[1],
+            'motivo': raw[2],
+            'descricao': raw[3],
+            'id_animal': raw[4],
+            'id_vet': raw[5],
+            'nome_animal': raw[6],
+            'nome_vet': raw[7],
+        }
+    except Exception:
+        cursor.execute("SELECT c.id_consulta, c.data_consulta, c.motivo, c.id_animal, c.id_vet, a.nome, v.nome FROM consultas c JOIN animais a ON c.id_animal = a.id_animal JOIN veterinarios v ON c.id_vet = v.id_vet WHERE c.id_consulta = %s", (id_consulta,))
+        raw = cursor.fetchone()
+        conn.close()
+        if not raw:
+            return None
+        return {
+            'id_consulta': raw[0],
+            'data_consulta': raw[1],
+            'motivo': raw[2],
+            'descricao': None,
+            'id_animal': raw[3],
+            'id_vet': raw[4],
+            'nome_animal': raw[5],
+            'nome_vet': raw[6],
+        }
+
+
+def atualizar_descricao_consulta(id_consulta, descricao):
+    conn = ligar()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT 1 FROM consultas WHERE id_consulta = %s", (id_consulta,))
+        if not cursor.fetchone():
+            return False, "Consulta não encontrada."
+
+        # certificar que a coluna existe
+        try:
+            cursor.execute("UPDATE consultas SET descricao = %s WHERE id_consulta = %s", (descricao, id_consulta))
+        except Exception:
+            return False, "A coluna descricao não existe. Atualize a estrutura da BD"
+
+        conn.commit()
+        return True, None
+    except Exception as e:
+        print("Erro ao atualizar descrição:", e)
+        return False, "Erro ao atualizar descrição"
+    finally:
+        conn.close()
+
+
+def relatorio_gastos_filtro(id_dono=None, id_animal=None):
+    conn = ligar()
+    cursor = conn.cursor()
+    query = """
+        SELECT d.nome, a.nome, SUM(ct.quantidade * t.preco)
+        FROM donos d
+        JOIN animais a ON d.id_dono = a.id_dono
+        JOIN consultas c ON a.id_animal = c.id_animal
+        JOIN consulta_tratamento ct ON c.id_consulta = ct.id_consulta
+        JOIN tratamentos t ON ct.id_tratamento = t.id_tratamento
+    """
+    params = []
+    conditions = []
+    if id_dono:
+        conditions.append("d.id_dono = %s")
+        params.append(id_dono)
+    if id_animal:
+        conditions.append("a.id_animal = %s")
+        params.append(id_animal)
+    if conditions:
+        query += " WHERE " + " AND ".join(conditions)
+    query += " GROUP BY d.nome, a.nome"
+    cursor.execute(query, tuple(params))
+    relatorio = cursor.fetchall()
+    conn.close()
+    return relatorio
+
+
 def listar_tratamentos():
     conn = ligar()
     cursor = conn.cursor()
@@ -95,6 +193,37 @@ def listar_tratamentos():
     tratamentos = cursor.fetchall()
     conn.close()
     return tratamentos  # (id_tratamento, nome, preco)
+
+def tratamentos_por_consulta(id_consulta):
+    conn = ligar()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT t.nome, ct.quantidade, (ct.quantidade * t.preco), t.id_tratamento
+        FROM consulta_tratamento ct
+        JOIN tratamentos t ON ct.id_tratamento = t.id_tratamento
+        WHERE ct.id_consulta = %s
+    """, (id_consulta,))
+    resultado = cursor.fetchall()
+    conn.close()
+    return resultado  # (nome, quantidade, total, id_tratamento)
+
+
+def remover_tratamento_consulta(id_consulta, id_tratamento):
+    conn = ligar()
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "DELETE FROM consulta_tratamento WHERE id_consulta = %s AND id_tratamento = %s",
+            (id_consulta, id_tratamento)
+        )
+        conn.commit()
+        return True, None
+    except Exception as e:
+        print("Erro ao remover tratamento:", e)
+        return False, "Erro ao remover tratamento."
+    finally:
+        conn.close()
+
 
 def adicionar_tratamento_a_consulta(id_consulta, id_tratamento, quantidade):
     conn = ligar()

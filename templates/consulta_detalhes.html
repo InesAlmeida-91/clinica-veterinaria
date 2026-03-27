@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="mb-4">
+  <a class="text-blue-600 hover:text-blue-800" href="{{ url_for('consultas') }}">← Voltar às consultas</a>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+  <!-- Coluna principal: dados da consulta + descrição -->
+  <div class="lg:col-span-2 space-y-4">
+
+    <!-- Dados da marcação -->
+    <div class="rounded-lg bg-white p-6 shadow-sm">
+      <h2 class="text-2xl font-semibold text-slate-800 mb-4">Consulta #{{ consulta.id_consulta }}</h2>
+      <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+        <div>
+          <dt class="font-medium text-slate-500">Data</dt>
+          <dd class="text-slate-800">{{ consulta.data_consulta|format_datetime }}</dd>
+        </div>
+        <div>
+          <dt class="font-medium text-slate-500">Animal</dt>
+          <dd class="text-slate-800">{{ consulta.nome_animal }}</dd>
+        </div>
+        <div>
+          <dt class="font-medium text-slate-500">Veterinário</dt>
+          <dd class="text-slate-800">{{ consulta.nome_vet }}</dd>
+        </div>
+        <div>
+          <dt class="font-medium text-slate-500">Motivo</dt>
+          <dd class="text-slate-800">{{ consulta.motivo }}</dd>
+        </div>
+      </dl>
+    </div>
+
+    <!-- Descrição clínica -->
+    <div class="rounded-lg bg-white p-6 shadow-sm">
+      <h3 class="text-lg font-semibold text-slate-800 mb-3">Descrição clínica</h3>
+
+      {% if session.role in ['vet', 'admin'] %}
+      <form method="post" class="space-y-3">
+        <input type="hidden" name="action" value="descricao">
+        <textarea
+          name="descricao"
+          rows="5"
+          placeholder="Descreva a situação clínica do animal…"
+          class="w-full rounded border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+        >{{ consulta.descricao or '' }}</textarea>
+        <button class="rounded bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 transition" type="submit">
+          Guardar descrição
+        </button>
+      </form>
+      {% else %}
+      <div class="rounded bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-700">
+        {{ consulta.descricao or 'Sem descrição clínica registada.' }}
+      </div>
+      {% endif %}
+    </div>
+
+  </div>
+
+  <!-- Coluna lateral: tratamentos -->
+  <div class="rounded-lg bg-white p-6 shadow-sm">
+    <h3 class="text-lg font-semibold text-slate-800 mb-4">Tratamentos</h3>
+
+    <!-- Formulário para adicionar (apenas vet/admin) -->
+    {% if session.role in ['vet', 'admin'] %}
+    <form method="post" class="mb-5 space-y-3 border-b border-slate-200 pb-5">
+      <input type="hidden" name="action" value="add_tratamento">
+      <div>
+        <label class="mb-1 block text-xs font-medium text-slate-500">Tratamento</label>
+        <select name="id_tratamento" required
+          class="w-full rounded border border-slate-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none">
+          <option value="">-- Selecionar --</option>
+          {% for t in tratamentos_disponiveis %}
+          <option value="{{ t[0] }}">{{ t[1] }} — €{{ "%.2f"|format(t[2]) }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label class="mb-1 block text-xs font-medium text-slate-500">Quantidade</label>
+        <input type="number" name="quantidade" min="1" value="1" required
+          class="w-full rounded border border-slate-300 px-2 py-1.5 text-sm">
+      </div>
+      <button class="w-full rounded bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700 transition" type="submit">
+        Adicionar tratamento
+      </button>
+    </form>
+    {% endif %}
+
+    <!-- Lista de tratamentos adicionados -->
+    {% if consulta_tratamentos %}
+    <ul class="space-y-2">
+      {% for t in consulta_tratamentos %}
+      <li class="flex items-start justify-between rounded bg-slate-50 border border-slate-200 px-3 py-2">
+        <div>
+          <p class="text-sm font-medium text-slate-800">{{ t[0] }}</p>
+          <p class="text-xs text-slate-500">Qtd: {{ t[1] }} &nbsp;|&nbsp; Total: €{{ "%.2f"|format(t[2]) }}</p>
+        </div>
+        {% if session.role in ['vet', 'admin'] %}
+        <form method="post" action="{{ url_for('remover_tratamento_route', id_consulta=consulta.id_consulta, id_tratamento=t[3]) }}" class="ml-2 flex-shrink-0">
+          <button class="text-xs text-red-500 hover:text-red-700" type="submit"
+            onclick="return confirm('Remover tratamento?')">✕</button>
+        </form>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="mt-4 rounded bg-blue-50 border border-blue-200 px-3 py-2 text-sm font-semibold text-blue-800">
+      Total: €{{ "%.2f"|format(consulta_tratamentos|sum(attribute=2)) }}
+    </div>
+    {% else %}
+    <p class="text-sm text-slate-500">Nenhum tratamento adicionado.</p>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

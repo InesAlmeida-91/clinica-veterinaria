@@ -2,7 +2,9 @@
 {% block content %}
 <div class="flex items-center justify-between mb-4">
   <h2 class="text-2xl font-semibold text-slate-800">Donos</h2>
-  <a class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition" href="{{ url_for('novo_dono') }}">Novo dono</a>
+  {% if session.role in ['rececao', 'admin'] %}
+  <a class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition" href="{{ url_for('novo_dono') }}">Adicionar novo dono</a>
+  {% endif %}
 </div>
 <div class="overflow-x-auto rounded-lg border bg-white shadow-sm">
   <table class="min-w-full divide-y divide-slate-200">
@@ -11,6 +13,7 @@
         <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">ID</th>
         <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Nome</th>
         <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Telefone</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Ações</th>
       </tr>
     </thead>
     <tbody class="divide-y divide-slate-100">
@@ -19,6 +22,13 @@
         <td class="px-4 py-2 text-sm text-slate-700">{{ d[0] }}</td>
         <td class="px-4 py-2 text-sm text-slate-700">{{ d[1] }}</td>
         <td class="px-4 py-2 text-sm text-slate-700">{{ d[2] }}</td>
+        <td class="px-4 py-2 text-sm text-slate-700">
+          {% if session.role in ['rececao', 'admin'] %}
+          <a class="text-indigo-600 hover:text-indigo-800" href="{{ url_for('editar_dono', id_dono=d[0]) }}">Editar</a>
+          {% else %}
+          -
+          {% endif %}
+        </td>
       </tr>
       {% endfor %}
     </tbody>

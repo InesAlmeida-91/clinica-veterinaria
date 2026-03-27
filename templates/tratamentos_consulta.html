@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="rounded-lg bg-white p-6 shadow-sm">
-  <h2 class="text-2xl font-semibold text-slate-800 mb-4">Tratamentos da consulta {{ id_consulta }}</h2>
+  <h2 class="text-2xl font-semibold text-slate-800 mb-4">Tratamentos da consulta {{ consulta.id_consulta }} — Animal: {{ consulta.nome_animal }}</h2>
+  {% if consulta %}
+  <p class="text-sm text-slate-600 mb-3">Animal: {{ consulta[5] }}, Veterinário: {{ consulta[6] }}</p>
+  {% endif %}
 
   <h3 class="mb-2 text-lg font-medium text-slate-700">Adicionar tratamento</h3>
   <form method="post" class="space-y-4">
@@ -9,7 +12,7 @@
       <label class="mb-1 block text-sm font-medium text-slate-600">Tratamento</label>
       <select class="w-full rounded border border-slate-300 px-3 py-2" name="id_tratamento">
         {% for t in tratamentos %}
-          <option value="{{ t[0] }}">{{ t[0] }} - {{ t[1] }} ({{ t[2] }}€)</option>
+          <option value="{{ t[0] }}">{{ t[1] }} ({{ t[2] }}€)</option>
         {% endfor %}
       </select>
     </div>

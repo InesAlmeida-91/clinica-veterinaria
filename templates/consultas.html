@@ -2,7 +2,9 @@
 {% block content %}
 <div class="flex items-center justify-between mb-4">
   <h2 class="text-2xl font-semibold text-slate-800">Consultas</h2>
-  <a class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition" href="{{ url_for('nova_consulta') }}">Nova consulta</a>
+  {% if session.role in ['rececao', 'admin', 'vet'] %}
+  <a class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition" href="{{ url_for('nova_consulta') }}">Marcar nova consulta</a>
+  {% endif %}
 </div>
 <div class="overflow-x-auto rounded-lg border bg-white shadow-sm">
   <table class="min-w-full divide-y divide-slate-200">
@@ -11,19 +13,25 @@
         <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">ID</th>
         <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Data</th>
         <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Animal</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Motivo</th>
         <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Veterinário</th>
-        <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Tratamentos</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-slate-600">Detalhes</th>
       </tr>
     </thead>
     <tbody class="divide-y divide-slate-100">
       {% for c in consultas %}
       <tr class="hover:bg-slate-50">
         <td class="px-4 py-2 text-sm text-slate-700">{{ c[0] }}</td>
-        <td class="px-4 py-2 text-sm text-slate-700">{{ c[1] }}</td>
+        <td class="px-4 py-2 text-sm text-slate-700">{{ c[1]|format_datetime }}</td>
         <td class="px-4 py-2 text-sm text-slate-700">{{ c[2] }}</td>
         <td class="px-4 py-2 text-sm text-slate-700">{{ c[3] }}</td>
+        <td class="px-4 py-2 text-sm text-slate-700">{{ c[4] }}</td>
         <td class="px-4 py-2">
-          <a class="text-indigo-600 hover:text-indigo-800" href="{{ url_for('tratamentos_consulta', id_consulta=c[0]) }}">Gerir tratamentos</a>
+          {% if session.role in ['vet', 'admin'] %}
+          <a class="text-blue-600 hover:text-blue-800 text-sm" href="{{ url_for('consulta_detalhes', id_consulta=c[0]) }}">Ver consulta →</a>
+          {% else %}
+          <span class="text-slate-400 text-sm">-</span>
+          {% endif %}
         </td>
       </tr>
       {% endfor %}

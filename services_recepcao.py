@@ -47,14 +47,32 @@ def listar_animais():
     conn = ligar()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT a.id_animal, a.nome, d.nome
+        SELECT a.id_animal, a.nome, d.nome, a.ativo, a.id_dono
         FROM animais a
         JOIN donos d ON a.id_dono = d.id_dono
-        WHERE a.ativo = 1
     """)
     animais = cursor.fetchall()
     conn.close()
-    return animais  # (id_animal, nome_animal, nome_dono)
+    return animais  # (id_animal, nome_animal, nome_dono, ativo, id_dono)
+
+
+def buscar_animal(id_animal):
+    conn = ligar()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id_animal, nome, especie, raca, data_nascimento, id_dono, ativo FROM animais WHERE id_animal = %s", (id_animal,))
+    animal = cursor.fetchone()
+    conn.close()
+    return animal
+
+
+def buscar_dono(id_dono):
+    conn = ligar()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id_dono, nome, nif, telefone, email, ativo FROM donos WHERE id_dono = %s", (id_dono,))
+    dono = cursor.fetchone()
+    conn.close()
+    return dono
+
 
 def arquivar_animal(id_animal):
     conn = ligar()
