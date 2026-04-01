@@ -56,6 +56,20 @@ def listar_animais():
     return animais  # (id_animal, nome_animal, nome_dono, ativo, id_dono)
 
 
+def listar_animais_ativos():
+    conn = ligar()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT a.id_animal, a.nome, d.nome, a.ativo, a.id_dono
+        FROM animais a
+        JOIN donos d ON a.id_dono = d.id_dono
+        WHERE a.ativo = 1
+    """)
+    animais = cursor.fetchall()
+    conn.close()
+    return animais  # (id_animal, nome_animal, nome_dono, ativo, id_dono)
+
+
 def buscar_animal(id_animal):
     conn = ligar()
     cursor = conn.cursor()

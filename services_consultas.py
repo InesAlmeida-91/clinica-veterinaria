@@ -1,7 +1,17 @@
 # services_consultas.py
+from datetime import datetime
+
 from db import ligar, existe
 
 def marcar_consulta(data_consulta, motivo, id_animal, id_vet):
+    try:
+        data_consulta_dt = datetime.strptime(data_consulta, "%Y-%m-%d %H:%M:%S")
+    except ValueError:
+        return False, "Formato de data inválido."
+
+    if data_consulta_dt < datetime.now().replace(second=0, microsecond=0):
+        return False, "A data da consulta não pode ser no passado."
+
     conn = ligar()
     cursor = conn.cursor()
     try:

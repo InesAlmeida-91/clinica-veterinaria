@@ -98,11 +98,11 @@
   {% endif %}
 
   <main class="container mx-auto px-4 py-6 relative">
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <div class="space-y-2 mb-4">
-          {% for m in messages %}
-            <div class="rounded-lg border border-amber-300 bg-amber-100/85 px-4 py-2 text-sm text-orange-900 frosted">{{ m }}</div>
+          {% for category, m in messages %}
+            <div class="rounded-lg border px-4 py-2 text-sm frosted {% if category == 'error' %}border-red-300 bg-red-100/85 text-red-900{% elif category == 'success' %}border-green-300 bg-green-100/85 text-green-900{% else %}border-amber-300 bg-amber-100/85 text-orange-900{% endif %}">{{ m }}</div>
           {% endfor %}
         </div>
       {% endif %}

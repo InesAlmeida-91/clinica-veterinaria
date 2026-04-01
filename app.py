@@ -6,7 +6,7 @@ from db import ligar
 
 from services_recepcao import (
     registar_dono, listar_donos,
-    registar_animal, listar_animais, arquivar_animal,
+    registar_animal, listar_animais, listar_animais_ativos, arquivar_animal,
     buscar_dono, buscar_animal
 )
 from services_consultas import (
@@ -287,38 +287,80 @@ def consultas():
 @login_required
 @role_required(["rececao", "vet", "admin"])
 def nova_consulta():
-    animais_lista = listar_animais()
+    animais_lista = listar_animais_ativos()
     veterinarios_lista = listar_veterinarios()
+    min_datetime = datetime.now().replace(second=0, microsecond=0).strftime("%Y-%m-%dT%H:%M")
+    form_data = {
+        "data_consulta": "",
+        "motivo": "",
+        "id_animal": "",
+        "id_vet": "",
+    }
 
     if request.method == "POST":
-        data_consulta = request.form.get("data_consulta")
-        motivo = request.form.get("motivo", "").strip()
-        id_animal = request.form.get("id_animal")
-        id_vet = request.form.get("id_vet")
+        form_data = {
+            "data_consulta": request.form.get("data_consulta", "").strip(),
+            "motivo": request.form.get("motivo", "").strip(),
+            "id_animal": request.form.get("id_animal", "").strip(),
+            "id_vet": request.form.get("id_vet", "").strip(),
+        }
+        data_consulta = form_data["data_consulta"]
+        motivo = form_data["motivo"]
+        id_animal = form_data["id_animal"]
+        id_vet = form_data["id_vet"]
+        agora = datetime.now().replace(second=0, microsecond=0)
 
-        if not motivo or not id_animal or not id_vet:
-            flash("Motivo, animal e veterinário são obrigatórios.")
-            return redirect(url_for("nova_consulta"))
+        if not data_consulta or not motivo or not id_animal or not id_vet:
+            flash("Data, motivo, animal e veterinário são obrigatórios.", "error")
+            return render_template(
+                "nova_consulta.html",
+                animais=animais_lista,
+                veterinarios=veterinarios_lista,
+                form_data=form_data,
+                min_datetime=min_datetime
+            )
 
         if data_consulta:
             try:
-                dt = datetime.strptime(data_consulta, "%d-%m-%Y %H:%M")
+                try:
+                    dt = datetime.strptime(data_consulta, "%Y-%m-%dT%H:%M")
+                except ValueError:
+                    dt = datetime.strptime(data_consulta, "%d-%m-%Y %H:%M")
+                if dt < agora:
+                    flash("A data da consulta não pode ser no passado.", "error")
+                    return render_template(
+                        "nova_consulta.html",
+                        animais=animais_lista,
+                        veterinarios=veterinarios_lista,
+                        form_data=form_data,
+                        min_datetime=min_datetime
+                    )
                 data_consulta = dt.strftime("%Y-%m-%d %H:%M:%S")
             except ValueError:
-                flash("Formato de data inválido. Use DD-MM-AAAA HH:MM")
-                return redirect(url_for("nova_consulta"))
-        else:
-            data_consulta = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                flash("Formato de data inválido. Selecione uma data e hora válidas.", "error")
+                return render_template(
+                    "nova_consulta.html",
+                    animais=animais_lista,
+                    veterinarios=veterinarios_lista,
+                    form_data=form_data,
+                    min_datetime=min_datetime
+                )
 
         ok, erro = marcar_consulta(data_consulta, motivo, id_animal, id_vet)
 
         if ok:
-            flash("Consulta marcada com sucesso.")
+            flash("Consulta marcada com sucesso.", "success")
             return redirect(url_for("consultas"))
         else:
-            flash(erro)
+            flash(erro, "error")
 
-    return render_template("nova_consulta.html", animais=animais_lista, veterinarios=veterinarios_lista)
+    return render_template(
+        "nova_consulta.html",
+        animais=animais_lista,
+        veterinarios=veterinarios_lista,
+        form_data=form_data,
+        min_datetime=min_datetime
+    )
 
 
 # --- Tratamentos em consulta ---
