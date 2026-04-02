@@ -1,6 +1,0 @@
-melhorias app vet:
-	- manter dados marcação consultas em caso de erro
-	- não permitir datas passadas
-	- mudar icon olho password
-gerar relatório de apresentação
-ver se cumpre todos os requesitos
