@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clínica Veterinária</title>
+  <title>{% block title %}Clínica Veterinária{% endblock %}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -76,16 +76,16 @@
         <span class="inline-block h-8 w-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 shadow"></span>
         <h1 class="text-xl font-bold tracking-tight text-orange-950">Clínica Veterinária</h1>
       </div>
-      {% if session.username %}
+      {% if session.get("username") %}
       <div class="text-sm text-orange-900 flex flex-wrap items-center gap-4">
-        <span>Olá, <strong>{{ session.username }}</strong></span>
+        <span>Olá, <strong>{{ session.get("username") }}</strong></span>
         <a class="px-3 py-1 rounded-md bg-orange-500 text-white hover:bg-orange-600 transition" href="{{ url_for('logout') }}">Logout</a>
       </div>
       {% endif %}
     </div>
   </header>
 
-  {% if session.username %}
+  {% if session.get("username") %}
   <nav class="bg-amber-100/90 border-b border-orange-200 backdrop-blur-sm">
     <div class="container mx-auto px-4 py-2 flex flex-wrap gap-2">
       <a class="rounded-full px-3 py-1 text-sm font-semibold text-orange-900 hover:bg-amber-200" href="{{ url_for('index') }}">Início</a>
@@ -102,11 +102,14 @@
       {% if messages %}
         <div class="space-y-2 mb-4">
           {% for category, m in messages %}
-            <div class="rounded-lg border px-4 py-2 text-sm frosted {% if category == 'error' %}border-red-300 bg-red-100/85 text-red-900{% elif category == 'success' %}border-green-300 bg-green-100/85 text-green-900{% else %}border-amber-300 bg-amber-100/85 text-orange-900{% endif %}">{{ m }}</div>
+            <div class="rounded-lg border px-4 py-2 text-sm frosted {% if category == 'error' %}border-red-300 bg-red-100/85 text-red-900{% elif category == 'success' %}border-green-300 bg-green-100/85 text-green-900{% else %}border-amber-300 bg-amber-100/85 text-orange-900{% endif %}">
+              {{ m }}
+            </div>
           {% endfor %}
         </div>
       {% endif %}
     {% endwith %}
+
     {% block content %}{% endblock %}
   </main>
 </body>

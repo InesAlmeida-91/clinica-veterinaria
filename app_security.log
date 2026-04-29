@@ -1,0 +1,48 @@
+2026-04-29 10:19:34,092 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-04-29 10:19:34,092 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-29 10:19:34,135 - INFO -  * Restarting with watchdog (windowsapi)
+2026-04-29 10:19:34,970 - WARNING -  * Debugger is active!
+2026-04-29 10:19:34,981 - INFO -  * Debugger PIN: 143-668-114
+2026-04-29 10:19:37,535 - INFO - 127.0.0.1 - - [29/Apr/2026 10:19:37] "GET /login HTTP/1.1" 200 -
+2026-04-29 10:19:50,756 - INFO - Login com sucesso: admin
+2026-04-29 10:19:50,759 - INFO - 127.0.0.1 - - [29/Apr/2026 10:19:50] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-04-29 10:19:50,785 - INFO - 127.0.0.1 - - [29/Apr/2026 10:19:50] "GET / HTTP/1.1" 200 -
+2026-04-29 10:19:54,826 - INFO - 127.0.0.1 - - [29/Apr/2026 10:19:54] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-04-29 10:19:55,080 - INFO - 127.0.0.1 - - [29/Apr/2026 10:19:55] "GET /login HTTP/1.1" 200 -
+2026-04-29 10:51:40,798 - INFO -  * Detected change in 'C:\\Users\\filip\\Desktop\\curso python\\clinica_veterinaria\\app.py', reloading
+2026-04-29 10:51:41,641 - INFO -  * Restarting with watchdog (windowsapi)
+2026-04-29 10:51:42,703 - WARNING -  * Debugger is active!
+2026-04-29 10:51:42,714 - INFO -  * Debugger PIN: 143-668-114
+2026-04-29 11:30:52,140 - INFO - 127.0.0.1 - - [29/Apr/2026 11:30:52] "GET /login HTTP/1.1" 200 -
+2026-04-29 11:32:50,455 - INFO -  * Detected change in 'C:\\Users\\filip\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\flask\\__init__.py', reloading
+2026-04-29 11:32:50,571 - INFO -  * Detected change in 'C:\\Users\\filip\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\flask\\app.py', reloading
+2026-04-29 11:32:50,770 - INFO -  * Detected change in 'C:\\Users\\filip\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\flask\\sansio\\app.py', reloading
+2026-04-29 11:32:50,865 - INFO -  * Detected change in 'C:\\Users\\filip\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\flask\\sansio\\scaffold.py', reloading
+2026-04-29 11:32:50,952 - INFO -  * Detected change in 'C:\\Users\\filip\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\flask\\templating.py', reloading
+2026-04-29 11:32:50,988 - INFO -  * Detected change in 'C:\\Users\\filip\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\jinja2\\__init__.py', reloading
+2026-04-29 11:32:51,061 - INFO -  * Detected change in 'C:\\Users\\filip\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\jinja2\\environment.py', reloading
+2026-04-29 11:32:51,827 - INFO -  * Restarting with watchdog (windowsapi)
+2026-04-29 11:32:54,757 - WARNING -  * Debugger is active!
+2026-04-29 11:32:54,776 - INFO -  * Debugger PIN: 143-668-114
+2026-04-29 11:55:06,767 - INFO - 127.0.0.1 - - [29/Apr/2026 11:55:06] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-04-29 11:55:06,852 - INFO - 127.0.0.1 - - [29/Apr/2026 11:55:06] "GET /login HTTP/1.1" 200 -
+2026-04-29 11:55:19,706 - INFO - The CSRF tokens do not match.
+2026-04-29 11:55:19,712 - INFO - 127.0.0.1 - - [29/Apr/2026 11:55:19] "[31m[1mPOST /login HTTP/1.1[0m" 400 -
+2026-04-29 11:55:19,990 - INFO - 127.0.0.1 - - [29/Apr/2026 11:55:19] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-04-29 11:56:02,013 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-04-29 11:56:02,014 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-29 11:56:02,041 - INFO -  * Restarting with watchdog (windowsapi)
+2026-04-29 11:56:02,731 - WARNING -  * Debugger is active!
+2026-04-29 11:56:02,745 - INFO -  * Debugger PIN: 143-668-114
+2026-04-29 11:56:19,889 - INFO - 127.0.0.1 - - [29/Apr/2026 11:56:19] "[32mGET / HTTP/1.1[0m" 302 -
+2026-04-29 11:56:19,954 - INFO - 127.0.0.1 - - [29/Apr/2026 11:56:19] "GET /login HTTP/1.1" 200 -
+2026-04-29 11:56:20,140 - INFO - 127.0.0.1 - - [29/Apr/2026 11:56:20] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-04-29 11:56:39,264 - INFO - Login com sucesso: admin
+2026-04-29 11:56:39,265 - INFO - 127.0.0.1 - - [29/Apr/2026 11:56:39] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-04-29 11:56:39,313 - INFO - 127.0.0.1 - - [29/Apr/2026 11:56:39] "GET / HTTP/1.1" 200 -
+2026-04-29 11:56:39,398 - INFO - 127.0.0.1 - - [29/Apr/2026 11:56:39] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-04-29 11:57:07,493 - INFO - 127.0.0.1 - - [29/Apr/2026 11:57:07] "GET / HTTP/1.1" 200 -
+2026-04-29 11:57:19,868 - INFO - 127.0.0.1 - - [29/Apr/2026 11:57:19] "GET / HTTP/1.1" 200 -
+2026-04-29 11:57:25,248 - INFO - 127.0.0.1 - - [29/Apr/2026 11:57:25] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -

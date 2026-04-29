@@ -1,38 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="mx-auto w-full max-w-md rounded-2xl border border-amber-300/80 bg-white/90 p-6 shadow-xl backdrop-blur-sm">
-  <h2 class="mb-1 text-2xl font-semibold tracking-tight text-orange-950">Login</h2>
-  <p class="mb-4 text-sm text-orange-800">Acede ao sistema da clínica</p>
-  <form method="post" class="space-y-4">
-    <div>
-      <label class="mb-1 block text-sm font-medium text-orange-800">Username</label>
-      <input class="w-full rounded border border-amber-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200" type="text" name="username" required>
-    </div>
-    <div>
-      <label class="mb-1 block text-sm font-medium text-orange-800">Password</label>
-      <div class="relative">
-        <input id="password" class="w-full rounded border border-amber-300 px-3 py-2 pr-10 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200" type="password" name="password" required>
-        <button type="button" onclick="doTogglePassword()" class="absolute right-2 top-1/2 -translate-y-1/2 opacity-60 hover:opacity-100 transition">
-          <img id="eyeIconImg" src="https://img.icons8.com/?size=24&id=121539&format=png&color=000000" alt="Mostrar password">
+<div class="max-w-md mx-auto bg-white rounded-xl shadow p-8">
+    <h2 class="text-2xl font-bold text-center text-emerald-700 mb-6">Login</h2>
+
+    <form method="post" class="space-y-4">
+        <!-- Token CSRF para impedir submissões forjadas -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div>
+            <label class="block text-sm font-medium mb-1">Username</label>
+            <input
+                type="text"
+                name="username"
+                required
+                maxlength="50"
+                class="w-full rounded-lg border px-3 py-2"
+            >
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-1">Password</label>
+            <input
+                type="password"
+                name="password"
+                required
+                maxlength="128"
+                class="w-full rounded-lg border px-3 py-2"
+            >
+        </div>
+
+        <button
+            type="submit"
+            class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-lg"
+        >
+            Entrar
         </button>
-      </div>
-    </div>
-    <button class="w-full rounded-md bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-2 font-semibold text-white hover:from-amber-600 hover:to-orange-600 transition" type="submit">Entrar</button>
-  </form>
+    </form>
 </div>
-<script>
-  function doTogglePassword() {
-    const pw = document.getElementById('password');
-    const icon = document.getElementById('eyeIconImg');
-    if (pw.type === 'password') {
-      pw.type = 'text';
-      icon.src = 'https://img.icons8.com/?size=24&id=121540&format=png&color=000000';
-      icon.alt = 'Ocultar password';
-    } else {
-      pw.type = 'password';
-      icon.src = 'https://img.icons8.com/?size=24&id=121539&format=png&color=000000';
-      icon.alt = 'Mostrar password';
-    }
-  }
-</script>
 {% endblock %}

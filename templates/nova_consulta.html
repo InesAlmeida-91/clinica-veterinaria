@@ -1,38 +1,62 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="rounded-lg bg-white p-6 shadow-sm">
-  <h2 class="text-2xl font-semibold text-orange-950 mb-4">Marcar nova consulta</h2>
-  <form method="post" class="space-y-4">
-    <div>
-      <label class="mb-1 block text-sm font-medium text-orange-800">Data e hora</label>
-      <input class="w-full rounded border border-amber-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200" type="datetime-local" name="data_consulta" required min="{{ min_datetime }}" value="{{ form_data.data_consulta }}">
-      <p class="mt-1 text-xs text-orange-700">Só podes marcar consultas a partir do momento atual.</p>
-    </div>
-    <div>
-      <label class="mb-1 block text-sm font-medium text-orange-800">Motivo</label>
-      <input class="w-full rounded border border-amber-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200" type="text" name="motivo" required value="{{ form_data.motivo }}">
-    </div>
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <label class="mb-1 block text-sm font-medium text-orange-800">Animal</label>
-        <select class="w-full rounded border border-amber-300 px-3 py-2" name="id_animal" required>
-          <option value="">Selecione o animal</option>
-          {% for a in animais %}
-          <option value="{{ a[0] }}" {% if form_data.id_animal == a[0]|string %}selected{% endif %}>{{ a[1] }} ({{ a[2] }})</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div>
-        <label class="mb-1 block text-sm font-medium text-orange-800">Veterinário</label>
-        <select class="w-full rounded border border-amber-300 px-3 py-2" name="id_vet" required>
-          <option value="">Selecione o veterinário</option>
-          {% for v in veterinarios %}
-          <option value="{{ v[0] }}" {% if form_data.id_vet == v[0]|string %}selected{% endif %}>{{ v[1] }}</option>
-          {% endfor %}
-        </select>
-      </div>
-    </div>
-    <button class="rounded bg-orange-500 px-4 py-2 text-white hover:bg-orange-600 transition" type="submit">Marcar nova consulta</button>
-  </form>
+<div class="max-w-2xl mx-auto bg-white rounded-xl shadow p-8">
+    <h2 class="text-2xl font-bold text-emerald-700 mb-6">Nova Consulta</h2>
+
+    <form method="post" class="space-y-4">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div>
+            <label class="block text-sm font-medium mb-1">Data da consulta</label>
+            <input
+                type="datetime-local"
+                name="data_consulta"
+                min="{{ min_datetime }}"
+                value="{{ form_data.data_consulta if form_data else '' }}"
+                required
+                class="w-full rounded-lg border px-3 py-2"
+            >
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-1">Motivo</label>
+            <input
+                type="text"
+                name="motivo"
+                value="{{ form_data.motivo if form_data else '' }}"
+                required
+                maxlength="255"
+                class="w-full rounded-lg border px-3 py-2"
+            >
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-1">Animal</label>
+            <select name="id_animal" required class="w-full rounded-lg border px-3 py-2">
+                <option value="">Selecione...</option>
+                {% for a in animais %}
+                    <option value="{{ a[0] }}" {% if form_data and form_data.id_animal == a[0]|string %}selected{% endif %}>
+                        {{ a[1] }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-1">Veterinário</label>
+            <select name="id_vet" required class="w-full rounded-lg border px-3 py-2">
+                <option value="">Selecione...</option>
+                {% for v in veterinarios %}
+                    <option value="{{ v[0] }}" {% if form_data and form_data.id_vet == v[0]|string %}selected{% endif %}>
+                        {{ v[1] }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg">
+            Marcar Consulta
+        </button>
+    </form>
 </div>
 {% endblock %}
